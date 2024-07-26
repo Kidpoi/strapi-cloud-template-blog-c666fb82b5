@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "personal_items",
+  "info": {
+    "singularName": "personal-item",
+    "pluralName": "personal-items",
+    "displayName": "Personal Items",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "start_date": {
+      "type": "date"
+    },
+    "end_date": {
+      "type": "date"
+    },
+    "sort_order": {
+      "type": "integer"
+    }
+  }
+}
