@@ -980,6 +980,8 @@ export interface ApiHomePageHomePage extends Schema.SingleType {
         }
       >;
     banner: Attribute.Media;
+    seo_title: Attribute.String;
+    seo_description: Attribute.Text;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;

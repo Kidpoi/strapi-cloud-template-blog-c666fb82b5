@@ -13,7 +13,8 @@
   "pluginOptions": {},
   "attributes": {
     "college": {
-      "type": "string"
+      "type": "string",
+      "required": false
     },
     "degree": {
       "type": "string"
