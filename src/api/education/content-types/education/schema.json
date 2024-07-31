@@ -21,9 +21,6 @@
     },
     "grad_year": {
       "type": "string"
-    },
-    "active": {
-      "type": "boolean"
     }
   }
 }

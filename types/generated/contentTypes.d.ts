@@ -841,7 +841,6 @@ export interface ApiContactContact extends Schema.SingleType {
     phone: Attribute.String;
     icon: Attribute.Media;
     label: Attribute.String;
-    active: Attribute.Boolean;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -907,7 +906,6 @@ export interface ApiEducationEducation extends Schema.SingleType {
     college: Attribute.String;
     degree: Attribute.String;
     grad_year: Attribute.String;
-    active: Attribute.Boolean;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -940,7 +938,6 @@ export interface ApiExperienceExperience extends Schema.SingleType {
   attributes: {
     years: Attribute.String;
     label: Attribute.String;
-    active: Attribute.Boolean;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1018,12 +1015,60 @@ export interface ApiJobJob extends Schema.CollectionType {
     start_date: Attribute.Date;
     end_date: Attribute.Date;
     sort_order: Attribute.Integer;
+    job_detail: Attribute.Relation<
+      'api::job.job',
+      'oneToOne',
+      'api::job-details.job-details'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<'api::job.job', 'oneToOne', 'admin::user'> &
       Attribute.Private;
     updatedBy: Attribute.Relation<'api::job.job', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+  };
+}
+
+export interface ApiJobDetailsJobDetails extends Schema.CollectionType {
+  collectionName: 'jobs_details';
+  info: {
+    singularName: 'job-details';
+    pluralName: 'jobs-details';
+    displayName: 'Job Details';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    content: Attribute.RichText &
+      Attribute.CustomField<
+        'plugin::ckeditor.CKEditor',
+        {
+          output: 'HTML';
+          preset: 'standard';
+        }
+      >;
+    label: Attribute.String;
+    job: Attribute.Relation<
+      'api::job-details.job-details',
+      'oneToOne',
+      'api::job.job'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::job-details.job-details',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::job-details.job-details',
+      'oneToOne',
+      'admin::user'
+    > &
       Attribute.Private;
   };
 }
@@ -1041,7 +1086,6 @@ export interface ApiPersonalPersonal extends Schema.SingleType {
   };
   attributes: {
     label: Attribute.String;
-    active: Attribute.Boolean;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1119,6 +1163,7 @@ declare module '@strapi/types' {
       'api::experience.experience': ApiExperienceExperience;
       'api::home-page.home-page': ApiHomePageHomePage;
       'api::job.job': ApiJobJob;
+      'api::job-details.job-details': ApiJobDetailsJobDetails;
       'api::personal.personal': ApiPersonalPersonal;
       'api::personal-item.personal-item': ApiPersonalItemPersonalItem;
     }

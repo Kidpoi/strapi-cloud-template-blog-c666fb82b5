@@ -29,6 +29,12 @@
     },
     "sort_order": {
       "type": "integer"
+    },
+    "job_detail": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::job-details.job-details",
+      "inversedBy": "job"
     }
   }
 }
