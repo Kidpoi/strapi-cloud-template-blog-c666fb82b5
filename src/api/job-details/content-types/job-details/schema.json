@@ -4,7 +4,8 @@
   "info": {
     "singularName": "job-details",
     "pluralName": "jobs-details",
-    "displayName": "Job Details"
+    "displayName": "Job Details",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -19,14 +20,25 @@
       },
       "customField": "plugin::ckeditor.CKEditor"
     },
-    "label": {
-      "type": "string"
-    },
     "job": {
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::job.job",
       "mappedBy": "job_detail"
+    },
+    "banner": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "roles": {
+      "type": "text"
     }
   }
 }

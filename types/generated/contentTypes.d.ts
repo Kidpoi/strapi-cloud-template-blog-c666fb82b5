@@ -800,13 +800,13 @@ export interface ApiCompanyCompany extends Schema.CollectionType {
   };
   attributes: {
     name: Attribute.String;
+    icon: Attribute.Media;
+    sort_order: Attribute.Integer;
     jobs: Attribute.Relation<
       'api::company.company',
       'oneToMany',
       'api::job.job'
     >;
-    icon: Attribute.Media;
-    sort_order: Attribute.Integer;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1020,6 +1020,11 @@ export interface ApiJobJob extends Schema.CollectionType {
       'oneToOne',
       'api::job-details.job-details'
     >;
+    company: Attribute.Relation<
+      'api::job.job',
+      'manyToOne',
+      'api::company.company'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1036,6 +1041,7 @@ export interface ApiJobDetailsJobDetails extends Schema.CollectionType {
     singularName: 'job-details';
     pluralName: 'jobs-details';
     displayName: 'Job Details';
+    description: '';
   };
   options: {
     draftAndPublish: true;
@@ -1049,12 +1055,13 @@ export interface ApiJobDetailsJobDetails extends Schema.CollectionType {
           preset: 'standard';
         }
       >;
-    label: Attribute.String;
     job: Attribute.Relation<
       'api::job-details.job-details',
       'oneToOne',
       'api::job.job'
     >;
+    banner: Attribute.Media;
+    roles: Attribute.Text;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;

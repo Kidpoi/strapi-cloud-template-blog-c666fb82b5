@@ -15,11 +15,6 @@
     "name": {
       "type": "string"
     },
-    "jobs": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::job.job"
-    },
     "icon": {
       "type": "media",
       "multiple": false,
@@ -33,6 +28,12 @@
     },
     "sort_order": {
       "type": "integer"
+    },
+    "jobs": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::job.job",
+      "mappedBy": "company"
     }
   }
 }

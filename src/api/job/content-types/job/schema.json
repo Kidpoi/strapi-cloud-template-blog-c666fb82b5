@@ -35,6 +35,12 @@
       "relation": "oneToOne",
       "target": "api::job-details.job-details",
       "inversedBy": "job"
+    },
+    "company": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::company.company",
+      "inversedBy": "jobs"
     }
   }
 }
