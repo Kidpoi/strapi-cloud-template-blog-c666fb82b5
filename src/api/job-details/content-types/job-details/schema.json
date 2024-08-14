@@ -39,6 +39,12 @@
     },
     "roles": {
       "type": "text"
+    },
+    "seo_title": {
+      "type": "string"
+    },
+    "seo_description": {
+      "type": "string"
     }
   }
 }

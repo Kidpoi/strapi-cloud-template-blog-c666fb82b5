@@ -1062,6 +1062,8 @@ export interface ApiJobDetailsJobDetails extends Schema.CollectionType {
     >;
     banner: Attribute.Media;
     roles: Attribute.Text;
+    seo_title: Attribute.String;
+    seo_description: Attribute.String;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
