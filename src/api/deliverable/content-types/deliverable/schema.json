@@ -1,0 +1,47 @@
+{
+  "kind": "collectionType",
+  "collectionName": "deliverables",
+  "info": {
+    "singularName": "deliverable",
+    "pluralName": "deliverables",
+    "displayName": "Deliverables",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "link": {
+      "type": "string"
+    },
+    "file": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "job": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::job.job",
+      "inversedBy": "deliverables"
+    },
+    "details": {
+      "type": "customField",
+      "options": {
+        "output": "HTML",
+        "preset": "standard"
+      },
+      "customField": "plugin::ckeditor.CKEditor"
+    },
+    "label": {
+      "type": "string"
+    }
+  }
+}

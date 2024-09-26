@@ -1,9 +1,9 @@
 'use strict';
 
 /**
- * job-details service
+ * gallery service
  */
 
 const { createCoreService } = require('@strapi/strapi').factories;
 
-module.exports = createCoreService('api::job-details.job-details');
+module.exports = createCoreService('api::gallery.gallery');

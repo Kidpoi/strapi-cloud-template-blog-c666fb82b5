@@ -859,6 +859,52 @@ export interface ApiContactContact extends Schema.SingleType {
   };
 }
 
+export interface ApiDeliverableDeliverable extends Schema.CollectionType {
+  collectionName: 'deliverables';
+  info: {
+    singularName: 'deliverable';
+    pluralName: 'deliverables';
+    displayName: 'Deliverables';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    link: Attribute.String;
+    file: Attribute.Media;
+    job: Attribute.Relation<
+      'api::deliverable.deliverable',
+      'manyToOne',
+      'api::job.job'
+    >;
+    details: Attribute.RichText &
+      Attribute.CustomField<
+        'plugin::ckeditor.CKEditor',
+        {
+          output: 'HTML';
+          preset: 'standard';
+        }
+      >;
+    label: Attribute.String;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::deliverable.deliverable',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::deliverable.deliverable',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiDownloadCvDownloadCv extends Schema.SingleType {
   collectionName: 'download_cvs';
   info: {
@@ -956,6 +1002,37 @@ export interface ApiExperienceExperience extends Schema.SingleType {
   };
 }
 
+export interface ApiGalleryGallery extends Schema.CollectionType {
+  collectionName: 'galleries';
+  info: {
+    singularName: 'gallery';
+    pluralName: 'galleries';
+    displayName: 'Gallery';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    images: Attribute.Media;
+    job: Attribute.Relation<'api::gallery.gallery', 'oneToOne', 'api::job.job'>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::gallery.gallery',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::gallery.gallery',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiHomePageHomePage extends Schema.SingleType {
   collectionName: 'home_pages';
   info: {
@@ -1010,20 +1087,37 @@ export interface ApiJobJob extends Schema.CollectionType {
   };
   attributes: {
     current: Attribute.Boolean;
-    position: Attribute.String;
+    position: Attribute.String & Attribute.Required;
     location: Attribute.String;
     start_date: Attribute.Date;
     end_date: Attribute.Date;
-    sort_order: Attribute.Integer;
-    job_detail: Attribute.Relation<
-      'api::job.job',
-      'oneToOne',
-      'api::job-details.job-details'
-    >;
     company: Attribute.Relation<
       'api::job.job',
       'manyToOne',
       'api::company.company'
+    >;
+    gallery: Attribute.Relation<
+      'api::job.job',
+      'oneToOne',
+      'api::gallery.gallery'
+    >;
+    media: Attribute.Relation<'api::job.job', 'oneToMany', 'api::media.media'>;
+    content: Attribute.RichText &
+      Attribute.CustomField<
+        'plugin::ckeditor.CKEditor',
+        {
+          output: 'HTML';
+          preset: 'standard';
+        }
+      >;
+    banner: Attribute.Media;
+    roles: Attribute.Text;
+    seo_title: Attribute.String & Attribute.Required;
+    seo_description: Attribute.String & Attribute.Required;
+    deliverables: Attribute.Relation<
+      'api::job.job',
+      'oneToMany',
+      'api::deliverable.deliverable'
     >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
@@ -1035,19 +1129,22 @@ export interface ApiJobJob extends Schema.CollectionType {
   };
 }
 
-export interface ApiJobDetailsJobDetails extends Schema.CollectionType {
-  collectionName: 'jobs_details';
+export interface ApiMediaMedia extends Schema.CollectionType {
+  collectionName: 'medias';
   info: {
-    singularName: 'job-details';
-    pluralName: 'jobs-details';
-    displayName: 'Job Details';
+    singularName: 'media';
+    pluralName: 'medias';
+    displayName: 'Media';
     description: '';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
-    content: Attribute.RichText &
+    job: Attribute.Relation<'api::media.media', 'manyToOne', 'api::job.job'>;
+    label: Attribute.String;
+    link: Attribute.String;
+    details: Attribute.RichText &
       Attribute.CustomField<
         'plugin::ckeditor.CKEditor',
         {
@@ -1055,26 +1152,17 @@ export interface ApiJobDetailsJobDetails extends Schema.CollectionType {
           preset: 'standard';
         }
       >;
-    job: Attribute.Relation<
-      'api::job-details.job-details',
-      'oneToOne',
-      'api::job.job'
-    >;
-    banner: Attribute.Media;
-    roles: Attribute.Text;
-    seo_title: Attribute.String;
-    seo_description: Attribute.String;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
-      'api::job-details.job-details',
+      'api::media.media',
       'oneToOne',
       'admin::user'
     > &
       Attribute.Private;
     updatedBy: Attribute.Relation<
-      'api::job-details.job-details',
+      'api::media.media',
       'oneToOne',
       'admin::user'
     > &
@@ -1167,12 +1255,14 @@ declare module '@strapi/types' {
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'api::company.company': ApiCompanyCompany;
       'api::contact.contact': ApiContactContact;
+      'api::deliverable.deliverable': ApiDeliverableDeliverable;
       'api::download-cv.download-cv': ApiDownloadCvDownloadCv;
       'api::education.education': ApiEducationEducation;
       'api::experience.experience': ApiExperienceExperience;
+      'api::gallery.gallery': ApiGalleryGallery;
       'api::home-page.home-page': ApiHomePageHomePage;
       'api::job.job': ApiJobJob;
-      'api::job-details.job-details': ApiJobDetailsJobDetails;
+      'api::media.media': ApiMediaMedia;
       'api::personal.personal': ApiPersonalPersonal;
       'api::personal-item.personal-item': ApiPersonalItemPersonalItem;
     }

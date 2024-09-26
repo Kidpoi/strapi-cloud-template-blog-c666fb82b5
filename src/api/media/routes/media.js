@@ -1,9 +1,9 @@
 'use strict';
 
 /**
- * job-details router
+ * media router
  */
 
 const { createCoreRouter } = require('@strapi/strapi').factories;
 
-module.exports = createCoreRouter('api::job-details.job-details');
+module.exports = createCoreRouter('api::media.media');

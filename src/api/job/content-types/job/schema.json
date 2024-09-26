@@ -16,7 +16,8 @@
       "type": "boolean"
     },
     "position": {
-      "type": "string"
+      "type": "string",
+      "required": true
     },
     "location": {
       "type": "string"
@@ -27,20 +28,59 @@
     "end_date": {
       "type": "date"
     },
-    "sort_order": {
-      "type": "integer"
-    },
-    "job_detail": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::job-details.job-details",
-      "inversedBy": "job"
-    },
     "company": {
       "type": "relation",
       "relation": "manyToOne",
       "target": "api::company.company",
       "inversedBy": "jobs"
+    },
+    "gallery": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::gallery.gallery",
+      "mappedBy": "job"
+    },
+    "media": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::media.media",
+      "mappedBy": "job"
+    },
+    "content": {
+      "type": "customField",
+      "options": {
+        "output": "HTML",
+        "preset": "standard"
+      },
+      "customField": "plugin::ckeditor.CKEditor"
+    },
+    "banner": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "roles": {
+      "type": "text"
+    },
+    "seo_title": {
+      "type": "string",
+      "required": true
+    },
+    "seo_description": {
+      "type": "string",
+      "required": true
+    },
+    "deliverables": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::deliverable.deliverable",
+      "mappedBy": "job"
     }
   }
 }
